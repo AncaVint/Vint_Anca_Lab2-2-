@@ -19,5 +19,7 @@ namespace Vint_Anca_Lab2_2_.Data
         public DbSet<Vint_Anca_Lab2_2_.Models.Publisher>? Publisher { get; set; }
 
         public DbSet<Vint_Anca_Lab2_2_.Models.Author>? Author { get; set; }
+
+        public DbSet<Vint_Anca_Lab2_2_.Models.Category>? Category { get; set; }
     }
 }
