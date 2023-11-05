@@ -12,8 +12,8 @@ using Vint_Anca_Lab2_2_.Data;
 namespace Vint_Anca_Lab2_2_.Migrations
 {
     [DbContext(typeof(Vint_Anca_Lab2_2_Context))]
-    [Migration("20231031100643_Author")]
-    partial class Author
+    [Migration("20231031181533_RecoverDB")]
+    partial class RecoverDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,9 +32,6 @@ namespace Vint_Anca_Lab2_2_.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("AuthorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -44,8 +41,6 @@ namespace Vint_Anca_Lab2_2_.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AuthorID");
 
                     b.ToTable("Author");
                 });
@@ -83,6 +78,46 @@ namespace Vint_Anca_Lab2_2_.Migrations
                     b.ToTable("Book");
                 });
 
+            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.BookCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("BookID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BookID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("BookCategory");
+                });
+
+            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Publisher", b =>
                 {
                     b.Property<int>("ID")
@@ -100,17 +135,10 @@ namespace Vint_Anca_Lab2_2_.Migrations
                     b.ToTable("Publisher");
                 });
 
-            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Author", b =>
-                {
-                    b.HasOne("Vint_Anca_Lab2_2_.Models.Author", null)
-                        .WithMany("Authors")
-                        .HasForeignKey("AuthorID");
-                });
-
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Book", b =>
                 {
                     b.HasOne("Vint_Anca_Lab2_2_.Models.Author", "Author")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("AuthorID");
 
                     b.HasOne("Vint_Anca_Lab2_2_.Models.Publisher", "Publisher")
@@ -122,9 +150,38 @@ namespace Vint_Anca_Lab2_2_.Migrations
                     b.Navigation("Publisher");
                 });
 
+            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.BookCategory", b =>
+                {
+                    b.HasOne("Vint_Anca_Lab2_2_.Models.Book", "Book")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vint_Anca_Lab2_2_.Models.Category", "Category")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Author", b =>
                 {
-                    b.Navigation("Authors");
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Book", b =>
+                {
+                    b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Category", b =>
+                {
+                    b.Navigation("BookCategories");
                 });
 
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Publisher", b =>

@@ -30,9 +30,6 @@ namespace Vint_Anca_Lab2_2_.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("AuthorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -42,8 +39,6 @@ namespace Vint_Anca_Lab2_2_.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AuthorID");
 
                     b.ToTable("Author");
                 });
@@ -138,17 +133,10 @@ namespace Vint_Anca_Lab2_2_.Migrations
                     b.ToTable("Publisher");
                 });
 
-            modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Author", b =>
-                {
-                    b.HasOne("Vint_Anca_Lab2_2_.Models.Author", null)
-                        .WithMany("Authors")
-                        .HasForeignKey("AuthorID");
-                });
-
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Book", b =>
                 {
                     b.HasOne("Vint_Anca_Lab2_2_.Models.Author", "Author")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("AuthorID");
 
                     b.HasOne("Vint_Anca_Lab2_2_.Models.Publisher", "Publisher")
@@ -181,7 +169,7 @@ namespace Vint_Anca_Lab2_2_.Migrations
 
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Author", b =>
                 {
-                    b.Navigation("Authors");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Vint_Anca_Lab2_2_.Models.Book", b =>
