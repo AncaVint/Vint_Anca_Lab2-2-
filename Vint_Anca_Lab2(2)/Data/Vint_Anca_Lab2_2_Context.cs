@@ -21,5 +21,9 @@ namespace Vint_Anca_Lab2_2_.Data
         public DbSet<Vint_Anca_Lab2_2_.Models.Author>? Author { get; set; }
 
         public DbSet<Vint_Anca_Lab2_2_.Models.Category>? Category { get; set; }
+
+        public DbSet<Vint_Anca_Lab2_2_.Models.Borrowing>? Borrowing { get; set; }
+
+        public DbSet<Vint_Anca_Lab2_2_.Models.Member>? Member { get; set; }
     }
 }

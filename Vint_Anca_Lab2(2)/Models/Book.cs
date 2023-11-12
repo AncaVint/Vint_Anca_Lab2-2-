@@ -23,6 +23,7 @@ namespace Vint_Anca_Lab2_2_.Models
         public int? AuthorID { get; set; }
         [Display(Name = "Author Name")]
         public Author? Author { get; set; }
+        
         public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }
